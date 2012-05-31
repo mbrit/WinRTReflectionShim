@@ -1,5 +1,6 @@
 ﻿//
 // WinRT Reflector Shim - a library to assist in porting frameworks from .NET to WinRT.
+// https://github.com/mbrit/WinRTReflectionShim
 //
 // Copyright (c) 2012 Matthew Baxter-Reynolds 2012 (@mbrit)
 // 
@@ -1036,6 +1037,16 @@ namespace System.Reflection.Tests
 			var ctrs = typeof(TypeExtenderFooSubClass).GetConstructors();
 			Assert.AreEqual(1, ctrs.Length);
 			Assert.AreEqual(typeof(DateTime), ctrs[0].GetParameters()[0].ParameterType);
+		}
+
+		[TestMethod()]
+		public void TestGetBaseDefinition()
+		{
+			var method = typeof(TypeExtenderFooInterfaces3).GetMethod("DoMagic");
+			Assert.AreEqual(typeof(TypeExtenderFooInterfaces3), method.DeclaringType);
+
+			var baseMethod = method.GetBaseDefinition();
+			Assert.AreEqual(typeof(TypeExtenderFooInterfaces), baseMethod.DeclaringType);
 		}
 	}
 }

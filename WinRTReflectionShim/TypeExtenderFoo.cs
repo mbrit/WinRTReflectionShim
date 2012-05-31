@@ -1,5 +1,6 @@
 ﻿//
 // WinRT Reflector Shim - a library to assist in porting frameworks from .NET to WinRT.
+// https://github.com/mbrit/WinRTReflectionShim
 //
 // Copyright (c) 2012 Matthew Baxter-Reynolds 2012 (@mbrit)
 // 
@@ -209,9 +210,22 @@ namespace System.Reflection.Tests
 
 	internal class TypeExtenderFooInterfaces : IFoo, IFoo2
 	{
+		public virtual void DoMagic()
+		{
+		}
 	}
 
 	internal class TypeExtenderFooInterfaces2 : TypeExtenderFooInterfaces, IFoo3
 	{
+		public override void DoMagic()
+		{
+		}
+	}
+
+	internal class TypeExtenderFooInterfaces3 : TypeExtenderFooInterfaces2
+	{
+		public override void DoMagic()
+		{
+		}
 	}
 }

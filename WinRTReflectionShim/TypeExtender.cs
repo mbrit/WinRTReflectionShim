@@ -1,5 +1,8 @@
 ﻿//
 // WinRT Reflector Shim - a library to assist in porting frameworks from .NET to WinRT.
+// https://github.com/mbrit/WinRTReflectionShim
+//
+// *** USE THIS FILE IN YOUR METRO-STYLE PROJECT ***
 //
 // Copyright (c) 2012 Matthew Baxter-Reynolds 2012 (@mbrit)
 // 
@@ -532,7 +535,34 @@ namespace System.Reflection
 
 		public static MethodInfo GetBaseDefinition(this MethodInfo method)
 		{
-			throw new NotImplementedException("This operation has not been implemented.");
+			var flags = BindingFlags.Instance;
+			if(method.IsPublic)
+				flags |= BindingFlags.Public;
+			else
+				flags |= BindingFlags.NonPublic;
+
+			List<Type> parameters = new List<Type>();
+			foreach (var parameter in method.GetParameters())
+				parameters.Add(parameter.ParameterType);
+
+			// get...
+			var info = method.DeclaringType.GetTypeInfo();
+			var found = new List<MethodInfo>();
+			while (true)
+			{
+				// find...
+				MethodInfo inParent = info.AsType().GetMethod(method.Name, flags, null, parameters.ToArray(), null);
+				if (inParent != null)
+					found.Add(inParent);
+
+				// up...
+				if(info.BaseType == null)
+					break;
+				info = info.BaseType.GetTypeInfo();
+			}
+
+			// return the last one...
+			return found.Last();
 		}
 	}
 
