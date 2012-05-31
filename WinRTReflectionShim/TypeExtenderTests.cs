@@ -976,7 +976,7 @@ namespace System.Reflection.Tests
 		public void TestMethodMatchParametersPublicInstance()
 		{
 			var method = typeof(TypeExtenderFoo).GetMethod("FixWarnings", new Type[] { typeof(string), typeof(int) });
-			Assert.IsNotNull(method);
+			Assert.AreEqual("FixWarnings", method.Name);
 		}
 
 		[TestMethod]
@@ -990,7 +990,7 @@ namespace System.Reflection.Tests
 		public void TestMethodMatchParametersPublicStatic()
 		{
 			var method = typeof(TypeExtenderFoo).GetMethod("FixWarningsStatic", new Type[] { typeof(string), typeof(int) });
-			Assert.IsNotNull(method);
+			Assert.AreEqual("FixWarningsStatic", method.Name);
 		}
 
 		[TestMethod]
@@ -1027,7 +1027,7 @@ namespace System.Reflection.Tests
 		public void TestGetMethodFlattenHierarchy()
 		{
 			var method = typeof(TypeExtenderFooSubClass).GetMethod("FixWarningsStatic", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-			Assert.IsNotNull(method);
+			Assert.AreEqual("FixWarningsStatic", method.Name);
 		}
 
 		[TestMethod()]

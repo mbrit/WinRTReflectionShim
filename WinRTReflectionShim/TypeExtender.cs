@@ -86,7 +86,7 @@ namespace System.Reflection
 		{
 			foreach (var method in type.GetMethods(flags))
 			{
-				if (CheckParameters(method, parameters))
+				if (method.Name == name && CheckParameters(method, parameters))
 					return method;
 			}
 
